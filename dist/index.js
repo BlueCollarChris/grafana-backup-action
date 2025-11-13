@@ -1,14 +1,14 @@
 import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ var __webpack_modules__ = ({
 
-/***/ 726:
+/***/ 969:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 /* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "E1": () => (/* binding */ grafanaApiKey),
-/* harmony export */   "oY": () => (/* binding */ grafanaOrg),
-/* harmony export */   "rZ": () => (/* binding */ overwriteFiles),
-/* harmony export */   "yV": () => (/* binding */ outputFolder)
+/* harmony export */   oB: () => (/* binding */ grafanaApiKey),
+/* harmony export */   qi: () => (/* binding */ outputFolder),
+/* harmony export */   xD: () => (/* binding */ grafanaOrg),
+/* harmony export */   xu: () => (/* binding */ overwriteFiles)
 /* harmony export */ });
 const grafanaOrg = process.env.GRAFANA_ORG
 const grafanaApiKey = process.env.GRAFANA_CLOUD_API_KEY
@@ -18,25 +18,25 @@ const overwriteFiles = process.env.OVERWRITE_FILES === 'true'
 
 /***/ }),
 
-/***/ 378:
+/***/ 483:
 /***/ ((__webpack_module__, __unused_webpack___webpack_exports__, __nccwpck_require__) => {
 
 __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony import */ var _lib_write_js__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(162);
-/* harmony import */ var _lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(362);
+/* harmony import */ var _lib_write_js__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(548);
+/* harmony import */ var _lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(751);
 
 
 
 const writeFiles = []
-const dashboards = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboards */ .j2)()
-const folders = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchFolders */ .F5)()
+const dashboards = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboards */ .SJ)()
+const folders = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchFolders */ .WU)()
 
-writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .c)('folders.json', folders))
-writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .c)('dashboards.json', dashboards))
+writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('folders.json', folders))
+writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('dashboards.json', dashboards))
 
 for (const d of dashboards) {
-  const db = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboard */ .AK)(d.uid)
-  writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .c)(`${d.uri.replace('db/', '')}.json`, db))
+  const db = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboard */ .f7)(d.uid)
+  writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)(`${d.uri.replace('db/', '')}.json`, db))
 }
 
 await Promise.all(writeFiles)
@@ -46,24 +46,24 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 362:
+/***/ 751:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 /* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "AK": () => (/* binding */ fetchDashboard),
-/* harmony export */   "F5": () => (/* binding */ fetchFolders),
-/* harmony export */   "j2": () => (/* binding */ fetchDashboards)
+/* harmony export */   SJ: () => (/* binding */ fetchDashboards),
+/* harmony export */   WU: () => (/* binding */ fetchFolders),
+/* harmony export */   f7: () => (/* binding */ fetchDashboard)
 /* harmony export */ });
-/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(726);
+/* harmony import */ var _config_js__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(969);
 
 
 ;
 
 const fetchGrafana = async (query) => {
   try {
-    const res = await fetch(`https://${_config_js__WEBPACK_IMPORTED_MODULE_0__/* .grafanaOrg */ .oY}.grafana.net/api/${query}`, {
+    const res = await fetch(`https://${_config_js__WEBPACK_IMPORTED_MODULE_0__/* .grafanaOrg */ .xD}.grafana.net/api/${query}`, {
       headers: {
-        Authorization: `Bearer ${_config_js__WEBPACK_IMPORTED_MODULE_0__/* .grafanaApiKey */ .E1}`
+        Authorization: `Bearer ${_config_js__WEBPACK_IMPORTED_MODULE_0__/* .grafanaApiKey */ .oB}`
       }
     })
 
@@ -94,13 +94,13 @@ const fetchDashboard = async (uid) => {
 
 /***/ }),
 
-/***/ 162:
+/***/ 548:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 
 // EXPORTS
 __nccwpck_require__.d(__webpack_exports__, {
-  "c": () => (/* binding */ write)
+  M: () => (/* binding */ write)
 });
 
 ;// CONCATENATED MODULE: external "node:fs/promises"
@@ -108,7 +108,7 @@ const promises_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.ur
 ;// CONCATENATED MODULE: external "node:path"
 const external_node_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("node:path");
 // EXTERNAL MODULE: ./config.js
-var config = __nccwpck_require__(726);
+var config = __nccwpck_require__(969);
 ;// CONCATENATED MODULE: ./lib/write.js
 
 
@@ -117,9 +117,9 @@ var config = __nccwpck_require__(726);
 
 
 const datePrefix = new Date().toISOString().split('T')[0]
-const backupDir = config/* overwriteFiles */.rZ
-  ? (0,external_node_path_namespaceObject.join)(process.cwd(), config/* outputFolder */.yV)
-  : (0,external_node_path_namespaceObject.join)(process.cwd(), config/* outputFolder */.yV, datePrefix)
+const backupDir = config/* overwriteFiles */.xu
+  ? (0,external_node_path_namespaceObject.join)(process.cwd(), config/* outputFolder */.qi)
+  : (0,external_node_path_namespaceObject.join)(process.cwd(), config/* outputFolder */.qi, datePrefix)
 
 let backupDirExists = false
 const write = async (filename, data) => {
@@ -176,7 +176,7 @@ const write = async (filename, data) => {
 /******/ 	var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
 /******/ 	var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
 /******/ 	var resolveQueue = (queue) => {
-/******/ 		if(queue && !queue.d) {
+/******/ 		if(queue && queue.d < 1) {
 /******/ 			queue.d = 1;
 /******/ 			queue.forEach((fn) => (fn.r--));
 /******/ 			queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
@@ -207,7 +207,7 @@ const write = async (filename, data) => {
 /******/ 	}));
 /******/ 	__nccwpck_require__.a = (module, body, hasAwait) => {
 /******/ 		var queue;
-/******/ 		hasAwait && ((queue = []).d = 1);
+/******/ 		hasAwait && ((queue = []).d = -1);
 /******/ 		var depQueues = new Set();
 /******/ 		var exports = module.exports;
 /******/ 		var currentDeps;
@@ -235,7 +235,7 @@ const write = async (filename, data) => {
 /******/ 			});
 /******/ 			return fn.r ? promise : getResult();
 /******/ 		}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
-/******/ 		queue && (queue.d = 0);
+/******/ 		queue && queue.d < 0 && (queue.d = 0);
 /******/ 	};
 /******/ })();
 /******/ 
@@ -265,6 +265,6 @@ const write = async (filename, data) => {
 /******/ // startup
 /******/ // Load entry module and return exports
 /******/ // This entry module used 'module' so it can't be inlined
-/******/ var __webpack_exports__ = __nccwpck_require__(378);
+/******/ var __webpack_exports__ = __nccwpck_require__(483);
 /******/ __webpack_exports__ = await __webpack_exports__;
 /******/ 
