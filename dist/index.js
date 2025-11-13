@@ -27,16 +27,19 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 
 
+
 const writeFiles = []
 const dashboards = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboards */ .SJ)()
 const folders = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchFolders */ .WU)()
+const alerts = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchAlerts */ .Mn)()
 
-writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('folders.json', folders))
-writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('dashboards.json', dashboards))
+writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('data', 'folders.json', folders))
+writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('data', 'dashboards.json', dashboards))
+writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('data', 'alerts.json', alerts))
 
 for (const d of dashboards) {
   const db = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboard */ .f7)(d.uid)
-  writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)(`${d.uri.replace('db/', '')}.json`, db))
+  writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('dashboards', `${d.uri.replace('db/', '')}.json`, db))
 }
 
 await Promise.all(writeFiles)
@@ -50,6 +53,7 @@ __webpack_async_result__();
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 /* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
+/* harmony export */   Mn: () => (/* binding */ fetchAlerts),
 /* harmony export */   SJ: () => (/* binding */ fetchDashboards),
 /* harmony export */   WU: () => (/* binding */ fetchFolders),
 /* harmony export */   f7: () => (/* binding */ fetchDashboard)
@@ -60,6 +64,8 @@ __webpack_async_result__();
 ;
 
 const fetchGrafana = async (query) => {
+  console.log(`https://${_config_js__WEBPACK_IMPORTED_MODULE_0__/* .grafanaOrg */ .xD}.grafana.net/api/${query}`)
+
   try {
     const res = await fetch(`https://${_config_js__WEBPACK_IMPORTED_MODULE_0__/* .grafanaOrg */ .xD}.grafana.net/api/${query}`, {
       headers: {
@@ -89,6 +95,10 @@ const fetchDashboards = async () => {
 
 const fetchDashboard = async (uid) => {
   return fetchGrafana(`dashboards/uid/${uid}`)
+}
+
+const fetchAlerts = async () => {
+  return fetchGrafana(`v1/provisioning/alert-rules/export?format=json`)
 }
 
 
@@ -121,16 +131,17 @@ const backupDir = config/* overwriteFiles */.xu
   ? (0,external_node_path_namespaceObject.join)(process.cwd(), config/* outputFolder */.qi)
   : (0,external_node_path_namespaceObject.join)(process.cwd(), config/* outputFolder */.qi, datePrefix)
 
-let backupDirExists = false
-const write = async (filename, data) => {
-  console.log(`writing: ${filename}`)
+let backupDirExists = {}
 
-  if (!backupDirExists) {
-    await (0,promises_namespaceObject.mkdir)(backupDir, { recursive: true })
-    backupDirExists = true
+const write = async (directory, filename, data) => {
+  console.log(`writing: ${directory}/${filename}`)
+
+  if (!backupDirExists[directory]) {
+    await (0,promises_namespaceObject.mkdir)((0,external_node_path_namespaceObject.join)(backupDir, directory), { recursive: true })
+    backupDirExists[directory] = true
   }
 
-  const file = (0,external_node_path_namespaceObject.join)(backupDir, filename)
+  const file = (0,external_node_path_namespaceObject.join)(backupDir, directory, filename)
   await (0,promises_namespaceObject.writeFile)(file, JSON.stringify(data, null, 2))
 }
 
