@@ -37,9 +37,10 @@ writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('d
 writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('data', 'dashboards.json', dashboards))
 writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('data', 'alerts.json', alerts))
 
-for (const d of dashboards) {
+for (const d of dashboards) {  
   const db = await (0,_lib_grafana_js__WEBPACK_IMPORTED_MODULE_1__/* .fetchDashboard */ .f7)(d.uid)
-  writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)('dashboards', `${d.uri.replace('db/', '')}.json`, db))
+  let folderTitle = d.folderTitle || "default"
+  writeFiles.push((0,_lib_write_js__WEBPACK_IMPORTED_MODULE_0__/* .write */ .M)(`dashboards/${folderTitle}`, `${d.uri.replace('db/', '')}.json`, db))
 }
 
 await Promise.all(writeFiles)
