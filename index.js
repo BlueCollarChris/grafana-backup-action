@@ -11,9 +11,10 @@ writeFiles.push(write('data', 'folders.json', folders))
 writeFiles.push(write('data', 'dashboards.json', dashboards))
 writeFiles.push(write('data', 'alerts.json', alerts))
 
-for (const d of dashboards) {
+for (const d of dashboards) {  
   const db = await fetchDashboard(d.uid)
-  writeFiles.push(write('dashboards', `${d.uri.replace('db/', '')}.json`, db))
+  let folderTitle = d.folderTitle || "default"
+  writeFiles.push(write(`dashboards/${folderTitle}`, `${d.uri.replace('db/', '')}.json`, db))
 }
 
 await Promise.all(writeFiles)
